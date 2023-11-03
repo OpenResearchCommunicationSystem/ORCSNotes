@@ -1,0 +1,146 @@
+Sub ORCSLongCiteToEndNotes()
+
+'' ORCS Macro ' ' PastePlaneText Macro ' '
+
+    Selection.PasteAndFormat (wdFormatPlainText)
+
+'
+' ORCSCleanup Macro
+'
+    
+    Dim done As Boolean
+    Do Until done
+    Selection.Find.ClearFormatting
+    Selection.Find.Replacement.ClearFormatting
+    With Selection.Find
+        .Text = "CiteLongStart*CiteLongEnd"
+        .Replacement.Text = ""
+        .Forward = False
+        .Wrap = wdFindAsk
+        .Format = False
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchAllWordForms = False
+        .MatchSoundsLike = False
+        .MatchWildcards = True
+    End With
+    If Selection.Find.Found Then
+    Else
+        done = True
+    End If
+    Selection.Find.Execute
+
+    Selection.Cut
+    With Selection
+        With .EndnoteOptions
+            .Location = wdEndOfDocument
+            .NumberingRule = wdRestartContinuous
+            .StartingNumber = 1
+            .NumberStyle = wdNoteNumberStyleLowercaseRoman
+        End With
+        .Endnotes.Add Range:=Selection.Range, Reference:=""
+    End With
+    Selection.PasteAndFormat (wdFormatPlainText)
+    Selection.Find.ClearFormatting
+    Selection.Find.Replacement.ClearFormatting
+    With Selection.Find
+        .Text = "CiteLongStart"
+        .Replacement.Text = ""
+        .Forward = False
+        .Wrap = wdFindAsk
+        .Format = False
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+    End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    With Selection.Find
+        .Text = "CiteLongEnd"
+        .Replacement.Text = ""
+        .Forward = False
+        .Wrap = wdFindAsk
+        .Format = False
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+    End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    Selection.HomeKey Unit:=wdStory
+    Loop
+    
+End Sub
+
+Sub ORCSLongCiteCleanup()
+
+' ORCSCleanup Macro
+'
+    
+    Dim done As Boolean
+    Do Until done
+    Selection.Find.ClearFormatting
+    Selection.Find.Replacement.ClearFormatting
+    With Selection.Find
+        .Text = "CiteLongStart*CiteLongEnd"
+        .Replacement.Text = ""
+        .Forward = False
+        .Wrap = wdFindAsk
+        .Format = False
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchAllWordForms = False
+        .MatchSoundsLike = False
+        .MatchWildcards = True
+    End With
+    If Selection.Find.Found Then
+    Else
+        done = True
+    End If
+    Selection.Find.Execute
+
+    Selection.Cut
+    With Selection
+        With .EndnoteOptions
+            .Location = wdEndOfDocument
+            .NumberingRule = wdRestartContinuous
+            .StartingNumber = 1
+            .NumberStyle = wdNoteNumberStyleLowercaseRoman
+        End With
+        .Endnotes.Add Range:=Selection.Range, Reference:=""
+    End With
+    Selection.PasteAndFormat (wdFormatPlainText)
+    Selection.Find.ClearFormatting
+    Selection.Find.Replacement.ClearFormatting
+    With Selection.Find
+        .Text = "CiteLongStart"
+        .Replacement.Text = ""
+        .Forward = False
+        .Wrap = wdFindAsk
+        .Format = False
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+    End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    With Selection.Find
+        .Text = "CiteLongEnd"
+        .Replacement.Text = ""
+        .Forward = False
+        .Wrap = wdFindAsk
+        .Format = False
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+    End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+    Selection.HomeKey Unit:=wdStory
+    Loop
+    
+End Sub
